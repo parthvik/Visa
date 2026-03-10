@@ -1,0 +1,153 @@
+{
+  "identity": {
+    "persona": "E1: The Anti-AI Designer",
+    "tone": "Premium, Intelligent, Empowering, Exclusive",
+    "metaphor": "The Digital Vault",
+    "theme_strategy": "Hybrid Luxury (Light Content / Dark Immersive Hero)"
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Chivo, sans-serif",
+      "display": "Playfair Display, serif",
+      "body": "DM Sans, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-display tracking-tight leading-none",
+      "h2": "text-3xl md:text-5xl font-sans tracking-tight font-bold",
+      "h3": "text-2xl md:text-3xl font-sans font-semibold",
+      "body": "text-base md:text-lg leading-relaxed text-muted-foreground",
+      "label": "text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground"
+    },
+    "installation_command": "npm install @fontsource/chivo @fontsource/playfair-display @fontsource/dm-sans @fontsource/jetbrains-mono"
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "DEFAULT": "#1A1F71",
+        "dark": "#0A0E45",
+        "light": "#333996"
+      },
+      "gold": {
+        "DEFAULT": "#D4AF37",
+        "dim": "#AA8C2C",
+        "shimmer": "#F7E7CE"
+      },
+      "platinum": {
+        "DEFAULT": "#E5E4E2",
+        "shadow": "#B0B0B0"
+      },
+      "infinite": {
+        "bg": "#020617",
+        "text": "#F8FAFC"
+      },
+      "background": {
+        "light": "#FAFAFA",
+        "dark": "#09090B"
+      }
+    },
+    "semantic": {
+      "hero_bg": "bg-slate-950",
+      "card_surface": "bg-white dark:bg-slate-900",
+      "accent_text": "text-[#D4AF37]",
+      "border_subtle": "border-slate-200 dark:border-slate-800"
+    }
+  },
+  "layout_strategy": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "spacing": {
+      "section_gap": "py-24 md:py-32",
+      "element_gap": "gap-6 md:gap-12"
+    },
+    "grids": {
+      "bento_benefits": "grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]",
+      "card_selector": "flex flex-col md:flex-row items-center justify-center gap-12 perspective-1000"
+    }
+  },
+  "component_guidelines": {
+    "Button": {
+      "styles": "rounded-none uppercase tracking-widest font-bold text-xs py-6 px-8 transition-all duration-300 hover:tracking-[0.2em]",
+      "variants": {
+        "primary": "bg-[#1A1F71] text-white hover:bg-[#0A0E45]",
+        "gold": "bg-gradient-to-r from-[#D4AF37] to-[#AA8C2C] text-white shadow-lg shadow-yellow-900/20",
+        "ghost": "bg-transparent border border-slate-200 hover:bg-slate-50 text-slate-900"
+      }
+    },
+    "Card": {
+      "styles": "rounded-xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-500",
+      "interaction": "hover:-translate-y-1"
+    },
+    "Input": {
+      "styles": "h-12 bg-slate-50 border-slate-200 focus:ring-2 focus:ring-[#1A1F71]/20 rounded-lg"
+    }
+  },
+  "visual_enhancers": {
+    "glassmorphism": "backdrop-blur-xl bg-white/70 border border-white/20 shadow-sm",
+    "gradients": {
+      "visa_infinite": "bg-gradient-to-br from-slate-900 via-[#1A1F71] to-slate-900",
+      "gold_rush": "bg-gradient-to-br from-[#F7E7CE] via-[#D4AF37] to-[#AA8C2C]"
+    },
+    "textures": "Use noise overlay (opacity 0.03) on solid backgrounds to prevent digital flatness."
+  },
+  "assets": {
+    "images": {
+      "card_infinite_bg": {
+        "url": "https://images.unsplash.com/photo-1761437855598-011cf89b2ad4?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "desc": "Abstract gold curves on black",
+        "usage": "Background for Infinite Card Visualization"
+      },
+      "card_gold_bg": {
+        "url": "https://images.unsplash.com/photo-1764263996484-73fed2cf6b98?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "desc": "Gold texture",
+        "usage": "Background for Gold Card Visualization"
+      },
+      "benefit_travel": {
+        "url": "https://images.unsplash.com/photo-1649147391870-a170da925530?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "desc": "Luxury Hallway Ocean",
+        "usage": "Travel Benefits Section"
+      },
+      "benefit_lifestyle": {
+        "url": "https://images.unsplash.com/photo-1768466589631-d2b64f6a02c5?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "desc": "Luxury Cars Building",
+        "usage": "Lifestyle/Dining Benefits Section"
+      }
+    },
+    "icons": {
+      "library": "lucide-react",
+      "style": "Stroke width 1.5px, crisp edges"
+    }
+  },
+  "motion": {
+    "library": "framer-motion",
+    "variants": {
+      "fadeInUp": {
+        "initial": { "opacity": 0, "y": 20 },
+        "animate": { "opacity": 1, "y": 0 },
+        "transition": { "duration": 0.5, "ease": "easeOut" }
+      },
+      "staggerContainer": {
+        "animate": { "transition": { "staggerChildren": 0.1 } }
+      }
+    }
+  },
+  "accessibility": {
+    "checklist": [
+      "Ensure text over images has 'bg-black/40' scrim or text-shadow.",
+      "Interactive elements must have 'focus-visible:ring-2' styles.",
+      "Gold text must only be used on Dark backgrounds (Slate-900+).",
+      "Use 'data-testid' on all buttons and inputs."
+    ]
+  },
+  "universal_guidelines": {
+    "rules": [
+      "Do NOT use standard 'Inter' font for headings.",
+      "Do NOT center text by default; use asymmetric layouts.",
+      "Avoid 100% full-width containers; use max-w-7xl.",
+      "Use 3x spacing (p-12 instead of p-4) for premium feel.",
+      "Interactive elements must have micro-interactions (hover lift, scale).",
+      "Use sonner for toasts.",
+      "Never use 'alert' or 'confirm' native dialogs; use Shadcn Dialog.",
+      "Implement Dark Mode toggle but default to 'Luxury Light' (White/Gold/Navy)."
+    ]
+  }
+}
