@@ -20,7 +20,7 @@ Build a Visa Card Benefits AI Agent - an AI-powered web app where users select t
 - Interactive AI chat advisor
 - Premium fintech-grade UI
 
-## What's Been Implemented (March 2026)
+## What's Been Implemented (Feb 2026)
 - [x] Full mock data for 5 card tiers (Classic, Gold, Platinum, Signature, Infinite) with 40+ benefits
 - [x] AI summarization endpoint (GPT-5.2) with multilingual support (25+ languages)
 - [x] AI chat advisor endpoint with session management
@@ -33,6 +33,12 @@ Build a Visa Card Benefits AI Agent - an AI-powered web app where users select t
 - [x] Language selector dropdown (25+ languages)
 - [x] Animated stat counters
 - [x] Full responsive design
+- [x] AMEX Platinum-inspired homepage redesign (Feb 2026 iteration 2)
+- [x] Auto-rotating hero card showcase with dot navigation
+- [x] AMEX-style horizontal tab navigation for benefit categories
+- [x] Editorial card tier rows with hover effects
+- [x] Scroll-responsive glassmorphism header
+- [x] Floating animated stats bar
 - [x] MongoDB storage for queries and chat history
 - [x] 100% test pass rate (backend + frontend + AI)
 

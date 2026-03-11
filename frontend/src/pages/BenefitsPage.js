@@ -175,7 +175,7 @@ export default function BenefitsPage() {
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
                   className={`cat-pill flex items-center gap-1.5 ${activeCategory === cat.id ? "active" : ""}`}
-                  data-testid={`category-${cat.id}`}
+                  data-testid={`category-${cat.id.toLowerCase()}`}
                 >
                   <BenefitIcon name={cat.icon} className="w-3.5 h-3.5" />
                   {cat.name}
