@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Loader2 } from "lucide-react";
+import { Send, Bot, User, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import axios from "axios";
@@ -15,11 +15,10 @@ export default function AIChatPanel({ cardId, cardName, language }) {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    // Welcome message
     setMessages([
       {
         role: "assistant",
-        content: `Welcome! I'm your ${cardName} benefits advisor. Ask me anything about your card's perks, travel insurance, dining rewards, or how to maximize your benefits. How can I help you today?`,
+        content: `Welcome! I'm your ${cardName} benefits advisor, powered by AI. Ask me anything about your card's perks -- travel insurance, dining rewards, purchase protection, or how to maximize your benefits. How can I help you today?`,
       },
     ]);
     setSessionId(null);
@@ -27,7 +26,8 @@ export default function AIChatPanel({ cardId, cardName, language }) {
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      const viewport = scrollRef.current.querySelector('[data-radix-scroll-area-viewport]');
+      if (viewport) viewport.scrollTop = viewport.scrollHeight;
     }
   }, [messages]);
 
@@ -40,34 +40,22 @@ export default function AIChatPanel({ cardId, cardName, language }) {
 
     try {
       const res = await axios.post(`${API}/chat`, {
-        card_id: cardId,
-        message: userMsg,
-        language: language,
-        session_id: sessionId,
+        card_id: cardId, message: userMsg, language, session_id: sessionId,
       });
       setSessionId(res.data.session_id);
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: res.data.response },
-      ]);
-    } catch (e) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content: "I apologize, but I'm having trouble connecting right now. Please try again in a moment.",
-        },
-      ]);
+      setMessages((prev) => [...prev, { role: "assistant", content: res.data.response }]);
+    } catch {
+      setMessages((prev) => [...prev, {
+        role: "assistant",
+        content: "I'm having trouble connecting right now. Please try again in a moment.",
+      }]);
     } finally {
       setLoading(false);
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   };
 
   const quickQuestions = [
@@ -78,56 +66,42 @@ export default function AIChatPanel({ cardId, cardName, language }) {
   ];
 
   return (
-    <div
-      className="flex flex-col h-[500px] rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm"
-      data-testid="ai-chat-panel"
-    >
+    <div className="flex flex-col h-[540px] rounded-2xl border border-slate-200/80 bg-white overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.06)]" data-testid="ai-chat-panel">
       {/* Header */}
-      <div className="flex items-center gap-3 px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
-        <div className="w-8 h-8 rounded-lg bg-[#1A1F71] flex items-center justify-center">
-          <Bot className="w-4 h-4 text-[#D4AF37]" strokeWidth={1.5} />
+      <div className="flex items-center gap-3.5 px-6 py-4 border-b border-slate-100/80 bg-gradient-to-r from-slate-50/80 to-white">
+        <div className="w-9 h-9 rounded-xl bg-[#1A1F71] flex items-center justify-center shadow-md shadow-[#1A1F71]/15">
+          <Bot className="w-4.5 h-4.5 text-[#D4AF37]" strokeWidth={1.5} />
         </div>
         <div>
-          <p className="text-sm font-semibold text-slate-900">Benefits Advisor</p>
-          <p className="text-xs text-slate-400 font-mono uppercase tracking-wider">
-            AI Powered
-          </p>
+          <p className="text-sm font-bold text-slate-900">Benefits Advisor</p>
+          <p className="text-[10px] text-[#D4AF37] font-mono uppercase tracking-[0.2em]">GPT-5.2 Powered</p>
         </div>
-        <div className="ml-auto flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs text-slate-400">Online</span>
+        <div className="ml-auto flex items-center gap-1.5 bg-emerald-50 px-2.5 py-1 rounded-full">
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-[10px] text-emerald-600 font-medium">Live</span>
         </div>
       </div>
 
       {/* Messages */}
-      <ScrollArea className="flex-1 p-4" ref={scrollRef}>
+      <ScrollArea className="flex-1 px-5 py-4" ref={scrollRef}>
         <div className="space-y-4" data-testid="chat-messages">
           {messages.map((msg, i) => (
             <div
               key={i}
-              className={`flex gap-2.5 ${
-                msg.role === "user" ? "flex-row-reverse" : ""
-              }`}
+              className={`flex gap-2.5 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
               data-testid={`chat-message-${i}`}
             >
-              <div
-                className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 ${
-                  msg.role === "user"
-                    ? "bg-[#1A1F71]"
-                    : "bg-slate-100"
-                }`}
-              >
-                {msg.role === "user" ? (
-                  <User className="w-3.5 h-3.5 text-white" strokeWidth={1.5} />
-                ) : (
-                  <Bot className="w-3.5 h-3.5 text-[#1A1F71]" strokeWidth={1.5} />
-                )}
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 ${
+                msg.role === "user" ? "bg-[#1A1F71]" : "bg-slate-100"
+              }`}>
+                {msg.role === "user"
+                  ? <User className="w-3.5 h-3.5 text-white" strokeWidth={1.5} />
+                  : <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" strokeWidth={1.5} />
+                }
               </div>
-              <div
-                className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed ${
-                  msg.role === "user" ? "user-bubble" : "ai-bubble"
-                }`}
-              >
+              <div className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed ${
+                msg.role === "user" ? "user-bubble" : "ai-bubble"
+              }`}>
                 {msg.content}
               </div>
             </div>
@@ -135,28 +109,28 @@ export default function AIChatPanel({ cardId, cardName, language }) {
           {loading && (
             <div className="flex gap-2.5" data-testid="chat-loading">
               <div className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center">
-                <Bot className="w-3.5 h-3.5 text-[#1A1F71]" strokeWidth={1.5} />
+                <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" strokeWidth={1.5} />
               </div>
               <div className="ai-bubble px-4 py-3 flex items-center gap-2">
-                <Loader2 className="w-4 h-4 animate-spin text-[#1A1F71]" />
-                <span className="text-sm text-slate-400">Thinking...</span>
+                <div className="flex gap-1">
+                  <div className="typing-dot" />
+                  <div className="typing-dot" />
+                  <div className="typing-dot" />
+                </div>
               </div>
             </div>
           )}
         </div>
       </ScrollArea>
 
-      {/* Quick questions (only when no user messages) */}
+      {/* Quick questions */}
       {messages.length <= 1 && (
-        <div className="px-4 pb-2 flex flex-wrap gap-1.5" data-testid="quick-questions">
+        <div className="px-5 pb-2 flex flex-wrap gap-1.5" data-testid="quick-questions">
           {quickQuestions.map((q, i) => (
             <button
               key={i}
-              onClick={() => {
-                setInput(q);
-                setTimeout(() => inputRef.current?.focus(), 50);
-              }}
-              className="text-xs px-3 py-1.5 rounded-full border border-slate-200 text-slate-500 hover:bg-[#1A1F71]/5 hover:text-[#1A1F71] hover:border-[#1A1F71]/20 transition-all duration-200"
+              onClick={() => { setInput(q); setTimeout(() => inputRef.current?.focus(), 50); }}
+              className="text-[11px] px-3 py-1.5 rounded-full border border-slate-200/80 text-slate-400 hover:bg-[#1A1F71]/5 hover:text-[#1A1F71] hover:border-[#1A1F71]/15 transition-all duration-300"
               data-testid={`quick-question-${i}`}
             >
               {q}
@@ -166,8 +140,8 @@ export default function AIChatPanel({ cardId, cardName, language }) {
       )}
 
       {/* Input */}
-      <div className="px-4 pb-4 pt-2">
-        <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:ring-2 focus-within:ring-[#1A1F71]/20 focus-within:border-[#1A1F71]/30 transition-all">
+      <div className="px-5 pb-5 pt-2">
+        <div className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-50/50 px-4 py-2.5 focus-within:ring-2 focus-within:ring-[#1A1F71]/15 focus-within:border-[#1A1F71]/25 focus-within:bg-white transition-all duration-300">
           <input
             ref={inputRef}
             type="text"
@@ -175,7 +149,7 @@ export default function AIChatPanel({ cardId, cardName, language }) {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask about your card benefits..."
-            className="flex-1 bg-transparent text-sm outline-none text-slate-900 placeholder:text-slate-400"
+            className="flex-1 bg-transparent text-sm outline-none text-slate-900 placeholder:text-slate-300"
             disabled={loading}
             data-testid="chat-input"
           />
@@ -183,7 +157,7 @@ export default function AIChatPanel({ cardId, cardName, language }) {
             size="icon"
             onClick={sendMessage}
             disabled={!input.trim() || loading}
-            className="w-8 h-8 rounded-lg bg-[#1A1F71] hover:bg-[#0A0E45] disabled:opacity-30"
+            className="w-8 h-8 rounded-lg bg-[#1A1F71] hover:bg-[#0A0E45] disabled:opacity-20 shadow-sm transition-all duration-300"
             data-testid="chat-send-button"
           >
             <Send className="w-3.5 h-3.5" strokeWidth={1.5} />
